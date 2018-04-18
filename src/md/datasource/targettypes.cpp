@@ -134,7 +134,7 @@ m_tableMax(0)
 HRESULT Target_MapSHash::ReadFrom(DataTargetReader & reader)
 {
     HRESULT hr = S_OK;
-    IfFailRet(reader.Skip8()); // this byte gets used by the base class even though it has no members
+    //IfFailRet(reader.Skip8()); // this byte gets used by the base class even though it has no members
                                // I'm guessing this is so the 2nd base class (noncopyable) doesn't start at the same
                                // location, but I can't be sure. Whatever the cause, the layout skips a byte.
     IfFailRet(reader.ReadPointer(&m_table));
@@ -323,7 +323,8 @@ HRESULT Target_RecordPool::ReadFrom(DataTargetReader & reader)
 {
     HRESULT hr = S_OK;
     IfFailRet(Target_StgPool::ReadFrom(reader));
-    reader.AlignBase();
+    //reader.AlignBase();
+    reader.Align(4);
     IfFailRet(reader.Read32(&m_cbRec));
     return S_OK;
 }
